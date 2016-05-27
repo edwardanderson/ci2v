@@ -5,6 +5,7 @@ ci2v searches videos for frames most similar to an image.
 
 
 ## Requirements
+* python
 * numpy
 * opencv
 * scikit-image
@@ -15,7 +16,7 @@ ci2v searches videos for frames most similar to an image.
 ci2v just needs an input image and a target video:
 
 ~~~text
-$ ci2v --image path/to/image --video path/to/video
+$ python ci2v.py --image path/to/image --video path/to/video
 ~~~
 
 
@@ -42,7 +43,7 @@ ci2v can optionally save matched frames as images:
 **example:** save the five best-matching frames from a video
 
 ~~~text
-$ ci2v --image path/to/image --video path/to/video --number 5 --output matched_frame.jpg
+$ python ci2v.py --image path/to/image --video path/to/video --number 5 --output matched_frame.jpg
 ~~~
 
 
