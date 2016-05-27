@@ -42,7 +42,7 @@ ci2v can optionally save matched frames as images:
 **example:** save the five best-matching frames from a video
 
 ~~~text
-$ ci2v --image path/to/image --video path/to/image --number 5 --output matched_frame.jpg
+$ ci2v --image path/to/image --video path/to/video --number 5 --output matched_frame.jpg
 ~~~
 
 
