@@ -8,14 +8,13 @@ import warnings
 import cv2
 
 from sys import stdout
-from itertools import izip
 
 from skimage import color
-from skimage.measure import structural_similarity as ssim
+from skimage.metrics import structural_similarity as ssim
 
 
 #record start time
-start = time.clock()
+start = time.process_time()
 
 #ignore non-contiguous skimage warning
 warnings.filterwarnings("ignore", module="skimage")
@@ -45,7 +44,7 @@ def parse_video(image, video, n_matches, break_point=False, verbose=False):
     frame_count = 0
     
     #get current time
-    fps_time = time.clock()
+    fps_time = time.process_time()
 
     cap = cv2.VideoCapture(video)
     while(cap.isOpened()):
@@ -81,7 +80,7 @@ def parse_video(image, video, n_matches, break_point=False, verbose=False):
         similarities = similarities[:n_matches]
 
         #calculate fps
-        fps = frame_count / (time.clock() - fps_time)
+        fps = frame_count / (time.process_time() - fps_time)
 
         #feedback to cli
         stdout.write('\r@ %d [%sfps] | best: %d (%s)  \r'
@@ -99,13 +98,13 @@ def parse_video(image, video, n_matches, break_point=False, verbose=False):
 
 def sort_results(results, output=False):
     #sort results
-    print '\n'
+    print('\n')
     sorted_results = sorted(results, key=operator.itemgetter('similarity'), reverse=True)
     n = 0
-    print '\n--results:'
+    print('\n--results:')
     for res in sorted_results:
         n += 1
-        print '#%s\t%s\t%s\t: %s' % (n, res['filename'], res['frame'], res['similarity'])
+        print('#%s\t%s\t%s\t: %s' % (n, res['filename'], res['frame'], res['similarity']))
 
         #save matched frames
         if output:
@@ -126,7 +125,7 @@ def walk(source_image, directory, number=1, break_point=False):
             for ext in extentions:
                 if file.endswith(ext):
                     video_fn = (os.path.join(root, file))
-                    print video_fn
+                    print(video_fn)
                     similarities = parse_video(source_image,
                                                video_fn,
                                                n_matches=number,
@@ -181,32 +180,32 @@ def main():
     #either walk directory or hande single file
     if args.directory:
         #scan directory and process each video file
-        print '\n--reading videos:'
+        print('\n--reading videos:')
         results = walk(source_image, args.directory, args.number, args.break_point)
         s_results = sort_results(results, args.output)
         
     else:
         #process single video file
-        print '\n--reading video:'
+        print('\n--reading video:')
         similarities = parse_video(source_image,
                                    args.video,
                                    n_matches=args.number,
                                    break_point=args.break_point)
 
-        print '\n\n--results:'
+        print('\n\n--results:')
         #results to cli
         n = 0
         for d in similarities:
             n += 1
-            print '#%s\t%s\t: %s' % (n, d['frame'], d['similarity'])
+            print('#%s\t%s\t: %s' % (n, d['frame'], d['similarity']))
             
             #save matched frames
             if args.output:
                 save_frame(args.output, n, d['image'])
 
-    seconds_taken = time.clock() - start
+    seconds_taken = time.process_time() - start
     time_taken = str(datetime.timedelta(seconds=seconds_taken))
-    print '\n--time taken: \n%s\n' % time_taken
+    print('\n--time taken: \n%s\n' % time_taken)
 
 
 if __name__ == '__main__':
