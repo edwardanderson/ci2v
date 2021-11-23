@@ -8,10 +8,9 @@ import warnings
 import cv2
 
 from sys import stdout
-from itertools import izip
 
 from skimage import color
-from skimage.measure import structural_similarity as ssim
+from skimage.metrics import structural_similarity as ssim
 
 
 #record start time
