@@ -5,10 +5,14 @@ ci2v searches videos for frames most similar to an image.
 
 
 ## Requirements
-* python
+* python 3.9 (might work with lower versions, but is untested!)
 * numpy
 * opencv
 * scikit-image
+
+```bash
+pip install scikit-image opencv-python numpy
+```
 
 
 ## How to use it
