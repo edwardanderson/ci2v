@@ -99,13 +99,13 @@ def parse_video(image, video, n_matches, break_point=False, verbose=False):
 
 def sort_results(results, output=False):
     #sort results
-    print '\n'
+    print('\n')
     sorted_results = sorted(results, key=operator.itemgetter('similarity'), reverse=True)
     n = 0
-    print '\n--results:'
+    print('\n--results:')
     for res in sorted_results:
         n += 1
-        print '#%s\t%s\t%s\t: %s' % (n, res['filename'], res['frame'], res['similarity'])
+        print('#%s\t%s\t%s\t: %s' % (n, res['filename'], res['frame'], res['similarity']))
 
         #save matched frames
         if output:
@@ -126,7 +126,7 @@ def walk(source_image, directory, number=1, break_point=False):
             for ext in extentions:
                 if file.endswith(ext):
                     video_fn = (os.path.join(root, file))
-                    print video_fn
+                    print(video_fn)
                     similarities = parse_video(source_image,
                                                video_fn,
                                                n_matches=number,
@@ -181,24 +181,24 @@ def main():
     #either walk directory or hande single file
     if args.directory:
         #scan directory and process each video file
-        print '\n--reading videos:'
+        print('\n--reading videos:')
         results = walk(source_image, args.directory, args.number, args.break_point)
         s_results = sort_results(results, args.output)
         
     else:
         #process single video file
-        print '\n--reading video:'
+        print('\n--reading video:')
         similarities = parse_video(source_image,
                                    args.video,
                                    n_matches=args.number,
                                    break_point=args.break_point)
 
-        print '\n\n--results:'
+        print('\n\n--results:')
         #results to cli
         n = 0
         for d in similarities:
             n += 1
-            print '#%s\t%s\t: %s' % (n, d['frame'], d['similarity'])
+            print('#%s\t%s\t: %s' % (n, d['frame'], d['similarity']))
             
             #save matched frames
             if args.output:
@@ -206,7 +206,7 @@ def main():
 
     seconds_taken = time.clock() - start
     time_taken = str(datetime.timedelta(seconds=seconds_taken))
-    print '\n--time taken: \n%s\n' % time_taken
+    print('\n--time taken: \n%s\n' % time_taken)
 
 
 if __name__ == '__main__':
