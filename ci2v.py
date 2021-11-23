@@ -14,7 +14,7 @@ from skimage.metrics import structural_similarity as ssim
 
 
 #record start time
-start = time.clock()
+start = time.process_time()
 
 #ignore non-contiguous skimage warning
 warnings.filterwarnings("ignore", module="skimage")
@@ -44,7 +44,7 @@ def parse_video(image, video, n_matches, break_point=False, verbose=False):
     frame_count = 0
     
     #get current time
-    fps_time = time.clock()
+    fps_time = time.process_time()
 
     cap = cv2.VideoCapture(video)
     while(cap.isOpened()):
@@ -80,7 +80,7 @@ def parse_video(image, video, n_matches, break_point=False, verbose=False):
         similarities = similarities[:n_matches]
 
         #calculate fps
-        fps = frame_count / (time.clock() - fps_time)
+        fps = frame_count / (time.process_time() - fps_time)
 
         #feedback to cli
         stdout.write('\r@ %d [%sfps] | best: %d (%s)  \r'
@@ -203,7 +203,7 @@ def main():
             if args.output:
                 save_frame(args.output, n, d['image'])
 
-    seconds_taken = time.clock() - start
+    seconds_taken = time.process_time() - start
     time_taken = str(datetime.timedelta(seconds=seconds_taken))
     print('\n--time taken: \n%s\n' % time_taken)
 
